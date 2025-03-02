@@ -1,15 +1,19 @@
 {
-    "private": true,
-    "workspaces": ["packages/*"],
-    "scripts": {
-      "dev": "pnpm --recursive run dev",
-      "build": "pnpm --recursive run build",
-      "test": "pnpm --recursive run test",
-      "lint": "pnpm --recursive run lint",
-      "setup": "bash scripts/setup.sh"
-    },
-    "devDependencies": {
-      "turbo": "^1.10.0"
-    }
+  "private": true,
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "pnpm --recursive run dev",
+    "build": "pnpm --recursive run build",
+    "test": "pnpm --recursive run test",
+    "lint": "pnpm --recursive run lint",
+    "setup": "bash scripts/setup.sh"
+  },
+  "devDependencies": {
+    "turbo": "^1.10.0"
+  },
+  "dependencies": {
+    "tsx": "^4.7.1"
   }
-  
+}
