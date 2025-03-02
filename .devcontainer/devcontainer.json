@@ -64,7 +64,7 @@
       "type": "bind"
     }
   ],
-  "postCreateCommand": "npm install -g npm@11.1.0 typescript ts-node eslint prettier",
+  "postCreateCommand": "npm install -g npm@11.1.0 typescript ts-node eslint prettier && pnpm install",
   "containerEnv": {
     "GIT_SSH_COMMAND": "ssh -o StrictHostKeyChecking=no"
   }

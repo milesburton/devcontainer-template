@@ -8,6 +8,7 @@ build/
 deno.lock
 deno_modules/
 *.tsbuildinfo
+.pnpm-store
 
 # 🔹 Environment variables (Vite, Bun, Deno, Supabase, Prisma, etc.)
 .env
