@@ -1,0 +1,95 @@
+# 🔹 Node.js, Bun, and Deno dependencies
+node_modules/
+dist/
+out/
+build/
+.cache/
+.bun/
+deno.lock
+deno_modules/
+*.tsbuildinfo
+
+# 🔹 Environment variables (Vite, Bun, Deno, Supabase, Prisma, etc.)
+.env
+.env.local
+.env.development
+.env.production
+.env.test
+.env.*.local
+.envrc
+.npmrc
+.bun.lockb
+*.pem
+*.key
+*.crt
+*.p12
+*.pfx
+
+# Allow sample environment files
+!.env.example
+
+# 🔹 Logs, temp, and debug files
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+pnpm-debug.log*
+bun-debug.log*
+lerna-debug.log*
+lerna-error.log*
+*.tmp
+*.pid
+debug.log*
+error.log*
+
+# 🔹 TypeScript & Babel Cache
+*.tsbuildinfo
+.cache/
+.babelrc
+
+# 🔹 Test Coverage
+/coverage
+/nyc_output
+/lcov-report
+/junit.xml
+
+# 🔹 Dev Containers generated files
+.devcontainer/.devcontainer.json.bak
+.devcontainer/Dockerfile.bak
+.devcontainer/.docker-compose.override.yml
+.devcontainer/tmp/
+
+# 🔹 SSH Keys (just in case)
+.ssh/*
+!/.ssh/known_hosts
+
+# 🔹 Local Development Databases & Migrations
+*.db
+*.sqlite
+*.sqlite3
+/migrations/
+/prisma/migrations/
+/supabase/migrations/
+
+# 🔹 Docker-related files
+docker-compose.override.yml
+docker-compose.dev.yml
+docker-compose.test.yml
+.dockerignore
+.docker-compose.override.yml
+/.docker/
+
+# 🔹 GitHub workflows temp files
+.github/workflows/*.bak
+.github/workflows/*.old
+.github/workflows/cache/
+
+# 🔹 macOS, Linux, and Windows junk
+Thumbs.db
+.DS_Store
+._*
+.Spotlight-V100
+.Trashes
+*.swp
+*.swo
+*.swn
