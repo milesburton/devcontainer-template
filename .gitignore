@@ -94,3 +94,7 @@ Thumbs.db
 *.swp
 *.swo
 *.swn
+
+# Playwright artifacts
+test-results/
+playwright-report/

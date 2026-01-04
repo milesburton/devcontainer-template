@@ -1,0 +1,25 @@
+# Dependency directories
+node_modules/
+.pnpm-store/
+
+# Build outputs
+build/
+dist/
+coverage/
+
+# Tooling caches
+.turbo/
+
+# Editor/Devcontainer metadata
+.vscode/
+.devcontainer/
+.husky/
+.github/
+
+# Lockfiles
+pnpm-lock.yaml
+yarn.lock
+package-lock.json
+
+# Reports/artifacts
+playwright-report/

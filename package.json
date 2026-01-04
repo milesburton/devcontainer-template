@@ -7,13 +7,44 @@
     "dev": "pnpm --recursive run dev",
     "build": "pnpm --recursive run build",
     "test": "pnpm --recursive run test",
+    "test:ci": "pnpm --recursive run test:ci",
+    "test:e2e": "playwright test",
+    "test:e2e:ci": "playwright test --reporter=line --timeout=30000",
+    "typecheck": "pnpm --recursive run typecheck",
     "lint": "pnpm --recursive run lint",
-    "setup": "bash scripts/setup.sh"
+    "format": "pnpm --recursive run format",
+    "format:write": "prettier --write .",
+    "format:check": "prettier --check .",
+    "verify:env": "node -e \"console.log('Hello from Dev Container')\" && pnpm -v && pnpm exec playwright --version",
+    "prepare": "husky",
+    "setup": "bash scripts/setup.sh",
+    "publish:image:ps": "powershell -ExecutionPolicy Bypass -File ./scripts/publish-devcontainer.ps1 -RegistryUser milesburton",
+    "publish:image:sh": "bash ./scripts/publish-devcontainer.sh"
   },
   "devDependencies": {
-    "turbo": "^1.10.0"
+    "turbo": "^1.10.0",
+    "eslint": "^9.4.0",
+    "@typescript-eslint/parser": "^7.8.0",
+    "@typescript-eslint/eslint-plugin": "^7.8.0",
+    "prettier": "^3.2.5",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-prettier": "^5.1.3",
+    "@commitlint/cli": "^19.3.0",
+    "@commitlint/config-conventional": "^19.2.2",
+    "husky": "^9.1.0",
+    "lint-staged": "^15.2.0",
+    "playwright": "^1.43.0"
   },
   "dependencies": {
     "tsx": "^4.7.1"
+  },
+  "lint-staged": {
+    "*.{ts,tsx}": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "*.{js,jsx,md,json}": [
+      "prettier --write"
+    ]
   }
 }
