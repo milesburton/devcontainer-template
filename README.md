@@ -72,3 +72,33 @@ By default, this Dev Container applies dotfiles from [milesburton/dotfiles](http
   },
 }
 ```
+
+## SSH Setup for Git (Windows)
+
+To push code from within the dev container, enable SSH agent forwarding on your Windows host:
+
+1. **Enable the SSH Agent service** (run PowerShell as Admin):
+
+```powershell
+   Get-Service ssh-agent | Set-Service -StartupType Automatic
+   Start-Service ssh-agent
+```
+
+2. **Add your SSH key:**
+
+```powershell
+   ssh-add $env:USERPROFILE\.ssh\id_rsa
+```
+
+3. Rebuild the dev container.
+
+The container will automatically forward your SSH agent for git operations.
+
+### Linux/macOS
+
+Ensure your SSH agent is running and key is added:
+
+```bash
+eval "$(ssh-agent -s)"
+ssh-add ~/.ssh/id_rsa
+```
