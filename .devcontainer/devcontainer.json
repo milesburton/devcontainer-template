@@ -51,9 +51,9 @@
     }
   ],
 
-  "postCreateCommand": "bash -lc 'sudo npm i -g pnpm; pnpm install; pnpm run prepare; if [ -n \"$DOTFILES_REPO\" ]; then if [ ! -d \"$HOME/.dotfiles\" ]; then git clone \"$DOTFILES_REPO\" \"$HOME/.dotfiles\" || true; fi; if [ -f \"$HOME/.dotfiles/install.sh\" ]; then bash \"$HOME/.dotfiles/install.sh\"; fi; fi; node -e \"console.log(\\\"Hello from Dev Container\\\")\"; pnpm -v; pnpm exec playwright --version'",
+  "postCreateCommand": "bash -lc 'sudo npm i -g pnpm; pnpm install; pnpm run prepare; if# [ -n \"$DOTFILES_REPO\" ]; then if [ ! -d \"$HOME/.dotfiles\" ]; then git clone \"$DOTFILES_REPO\" \"$HOME/.dotfiles\" || true; fi; if [ -f \"$HOME/.dotfiles/install.sh\" ]; then bash \"$HOME/.dotfiles/install.sh\"; fi; fi; node -e \"console.log(\\\"Hello from Dev Container\\\")\"; pnpm -v; pnpm exec playwright --version'",
   "containerEnv": {
-    "GIT_SSH_COMMAND": "ssh -o StrictHostKeyChecking=no -o StrictModes=no",
+"GIT_SSH_COMMAND": "ssh -o StrictHostKeyChecking=no",
     "PLAYWRIGHT_BROWSERS_PATH": "/ms-playwright",
     "DOTFILES_REPO": "https://github.com/milesburton/dotfiles"
   }
