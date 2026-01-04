@@ -12,7 +12,6 @@ coverage/
 
 # Editor/Devcontainer metadata
 .vscode/
-.devcontainer/
 .husky/
 .github/
 
