@@ -1,104 +1,102 @@
-# 🛠 Dev Container Setup
+# DevContainer Templates
 
-## 🔧 Local Build & Debug
+**Stop re-authenticating with Claude every time you spin up devcontainers!**
 
-Build the dev container image locally to debug Dockerfile or feature issues:
+This toolkit provides reusable devcontainer configurations and automation scripts to persist Claude CLI authentication across container rebuilds.
 
-```powershell
-docker build -f .devcontainer/Dockerfile .
-```
+## What's Included
 
-```bash
-docker build -f .devcontainer/Dockerfile .
-```
+1. **Base Templates** - Ready-to-use devcontainer configs
+   - [`base-devcontainer.json`](./base-devcontainer.json) - Standard Node.js setup with Claude auth
+   - [`base-dockerfile`](./base-dockerfile) - Minimal Node.js 22 Dockerfile
 
-Run the image interactively for debugging (no VS Code):
+2. **Automation Scripts**
+   - [`update-single-repo.sh`](./update-single-repo.sh) - Update one repo at a time
+   - [`update-all-devcontainers.sh`](./update-all-devcontainers.sh) - Bulk update all your repos
 
-```powershell
-# Windows PowerShell: mount workspace and host ~/.ssh (readonly)
-docker run --rm -it \
-	-v ${PWD}:/workspace \
-	-v $env:HOME/.ssh:/home/vscode/.ssh:ro \
-	-w /workspace \
-	mcr.microsoft.com/devcontainers/base:ubuntu bash
-```
+3. **Documentation**
+   - [`USAGE.md`](./USAGE.md) - Detailed usage guide and troubleshooting
+   - This README - Quick reference
 
-```bash
-# macOS/Linux Bash
-docker run --rm -it \
-	-v "$PWD":/workspace \
-	-v "$HOME"/.ssh:/home/vscode/.ssh:ro \
-	-w /workspace \
-	mcr.microsoft.com/devcontainers/base:ubuntu bash
-```
+## Quick Reference
 
-Useful checks inside the container:
+### The Fix (What Gets Added)
 
-- Fish terminal and banner are configured in [.devcontainer/devcontainer.json](.devcontainer/devcontainer.json) and [.devcontainer/Dockerfile](.devcontainer/Dockerfile).
-- SSH keys are not mounted by default. If needed, mount manually (see docker run examples above) or add a mount in devcontainer.json.
+Add this mount to your `devcontainer.json`:
 
-Dev Containers logs (VS Code):
-
-- Command Palette → “Dev Containers: Show Log” → copy errors for troubleshooting.
-
-## 🔐 SSH Keys (Optional)
-
-By default, this Dev Container does not mount host SSH keys.
-
-- Manual: Mount your keys when running the image interactively (examples above).
-- Devcontainer: To enable in VS Code, add a mount in [.devcontainer/devcontainer.json](.devcontainer/devcontainer.json), for example:
-
-```jsonc
-// .devcontainer/devcontainer.json
+```json
 {
-  "mounts": ["source=~/.ssh,target=/home/vscode/.ssh,type=bind,readonly"],
+  "mounts": [
+    "source=${localEnv:HOME}/.config/claude,target=/home/node/.config/claude,type=bind"
+  ]
 }
 ```
 
-If your keys aren’t visible in the container, verify your host has the `.ssh` folder and that the files are readable. You may also need to trust hosts or add entries to `known_hosts`.
+This mounts your host machine's Claude config directory (where the auth token lives) into the container, so you stay authenticated across rebuilds.
 
-## 🧩 Dotfiles
-
-By default, this Dev Container applies dotfiles from [milesburton/dotfiles](https://github.com/milesburton/dotfiles).
-
-- Default: `DOTFILES_REPO=https://github.com/milesburton/dotfiles` (set in [.devcontainer/devcontainer.json](.devcontainer/devcontainer.json)).
-- Override: Set `DOTFILES_REPO` to your repo URL (or set it empty to disable). On start, the container will clone to `~/.dotfiles` and run `install.sh` if present.
-
-```jsonc
-// .devcontainer/devcontainer.json
-{
-  "containerEnv": {
-    "DOTFILES_REPO": "https://github.com/YOUR_USERNAME/dotfiles",
-  },
-}
-```
-
-## SSH Setup for Git (Windows)
-
-To push code from within the dev container, enable SSH agent forwarding on your Windows host:
-
-1. **Enable the SSH Agent service** (run PowerShell as Admin):
-
-```powershell
-   Get-Service ssh-agent | Set-Service -StartupType Automatic
-   Start-Service ssh-agent
-```
-
-2. **Add your SSH key:**
-
-```powershell
-   ssh-add $env:USERPROFILE\.ssh\id_rsa
-```
-
-3. Rebuild the dev container.
-
-The container will automatically forward your SSH agent for git operations.
-
-### Linux/macOS
-
-Ensure your SSH agent is running and key is added:
+### Update Current Repo
 
 ```bash
-eval "$(ssh-agent -s)"
-ssh-add ~/.ssh/id_rsa
+~/devcontainer-templates/update-single-repo.sh
 ```
+
+### Create New Project
+
+```bash
+cp ~/devcontainer-templates/base-devcontainer.json .devcontainer/devcontainer.json
+cp ~/devcontainer-templates/base-dockerfile .devcontainer/Dockerfile
+# Then customize for your project
+```
+
+## Why This Matters
+
+Without this mount:
+1. Start devcontainer
+2. Run `claude` → prompted to authenticate
+3. Rebuild container
+4. Run `claude` → prompted to authenticate again 😤
+
+With this mount:
+1. Start devcontainer
+2. Run `claude` → already authenticated ✨
+3. Rebuild container
+4. Run `claude` → still authenticated ✨
+
+## Features of Base Template
+
+- **Claude auth persistence** - No more re-authenticating
+- **SSH keys mounted** - Git operations work seamlessly
+- **Modern Node.js** - Node 22 with latest npm
+- **Biome formatting** - Fast formatter and linter
+- **Common extensions** - GitLens, ESLint, Claude Code
+- **Port forwarding** - 3000 by default
+- **Auto install** - Runs `npm install` on container create
+
+## Next Steps
+
+1. Read [`USAGE.md`](./USAGE.md) for detailed instructions
+2. Test on one repo first with `update-single-repo.sh`
+3. Roll out to all repos with `update-all-devcontainers.sh`
+4. Use base templates for new projects
+
+## Customization
+
+The base templates are starting points. Common customizations:
+
+- **Different user**: Change `remoteUser` and mount target paths
+- **Python projects**: Swap Dockerfile base image
+- **Additional mounts**: Add `.gitconfig`, AWS credentials, etc.
+- **More ports**: Add to `forwardPorts` array
+- **Different package manager**: Change `postCreateCommand`
+
+See [USAGE.md](./USAGE.md) for examples.
+
+## Location
+
+All files are in: `~/devcontainer-templates/`
+
+---
+
+**No more repetitive conversations about devcontainer setup!** 🎉
+
+Just reference these templates and scripts for all future projects.

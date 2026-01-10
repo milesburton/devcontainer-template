@@ -1,0 +1,29 @@
+{
+  "name": "Project Name",
+  "build": {
+    "dockerfile": "Dockerfile",
+    "context": ".."
+  },
+  "customizations": {
+    "vscode": {
+      "settings": {
+        "terminal.integrated.defaultProfile.linux": "bash",
+        "editor.formatOnSave": true,
+        "editor.defaultFormatter": "biomejs.biome"
+      },
+      "extensions": [
+        "biomejs.biome",
+        "eamodio.gitlens",
+        "dbaeumer.vscode-eslint",
+        "anthropic.claude-code"
+      ]
+    }
+  },
+  "mounts": [
+    "source=${localEnv:HOME}/.ssh,target=/home/node/.ssh,type=bind,readonly",
+    "source=${localEnv:HOME}/.config/claude,target=/home/node/.config/claude,type=bind"
+  ],
+  "forwardPorts": [3000],
+  "postCreateCommand": "npm install",
+  "remoteUser": "node"
+}
